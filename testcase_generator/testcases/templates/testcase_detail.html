@@ -1,0 +1,18 @@
+{% if testcase %}
+<form action="{% url 'testcases:testcase_edit' testcase.id %}" method="post">
+    {% csrf_token %}
+    {{ testcase_form }}
+    <input type="submit" value="Generate">
+</form>
+{% else %}
+<form action="{% url 'testcases:testcase_create' %}" method="post">
+    {% csrf_token %}
+    {{ testcase_form }}
+    <input type="submit" value="Generate">
+</form>
+{% endif %}
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+<br>
+<p>{{ testcase.generated_text }}</p>
