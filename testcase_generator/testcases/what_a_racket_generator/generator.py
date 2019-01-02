@@ -84,6 +84,10 @@ class Struct:
         self.id = id
         self.base_vals = [list(filter(lambda x: x in primitives, val)) for val in vals]
         self.vals = vals
+        if type(vals[0]) is not list:
+            self.vals = []
+            self.vals.append(vals)
+
 
 class Item:
     """
@@ -102,9 +106,12 @@ class Item:
 
 #Stuff for structs
 #struct_id:struct
+
+
 primitives = ('Bool', 'Num', 'Float', 'Char', 'Str', 'Nat', 'empty')
 struct_list = {val: Struct(val, list(list(val))) for val in primitives}
 struct_list["Posn"] = Struct("Posn", (('Num', 'Nat'), ('Num', 'Nat')))
+struct_list["x"] = Struct("x", (('Num', 'Nat')))
 
 def generate_struct(struct_name, depth):
     """
@@ -137,7 +144,7 @@ def print_struct(struct):
     """
     if isinstance(struct, str):
         #assume is a primitive for now
-        return funcs[struct]()
+        return str(funcs[struct]())
     else:
         #is of type Item, check subtype
         ret = "( make-"+struct.struct_id
@@ -146,6 +153,8 @@ def print_struct(struct):
         ret += " )"
         return ret
 
-#struct_list["binode"] = Struct("binode", (("binode", "Str"), ("binode", "Str")))
+struct_list["binode"] = Struct("binode", (("binode", "Str"), ("binode", "Str")))
 
-#print(print_struct(generate_struct("binode", 3)))
+x = struct_list['x']
+
+print(print_struct(generate_struct("x", 3)))

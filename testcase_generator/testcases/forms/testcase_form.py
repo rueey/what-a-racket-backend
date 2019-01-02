@@ -1,6 +1,5 @@
 from django import forms
 
 class TestcaseForm(forms.Form):
-    name = forms.CharField(label="Name of testcase", max_length=50)
-    testcase_id = forms.CharField(label="Ids of the structs", max_length=400)
-    testcase_vals = forms.CharField(label="Struct representation", max_length=400)
+    testcase_id = forms.CharField(label="Id of the struct", max_length=400)
+    testcase_vals = forms.CharField(label="Struct representations", widget=forms.Textarea, max_length=400, required=False)

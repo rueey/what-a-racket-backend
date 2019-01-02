@@ -1,13 +1,27 @@
 {% if testcase %}
 <form action="{% url 'testcases:testcase_edit' testcase.id %}" method="post">
     {% csrf_token %}
-    {{ testcase_form }}
+    {{ testcase_form.testcase_id.label_tag }}
+    <br>
+    {{ testcase_form.testcase_id }}
+    <br>
+    {{ testcase_form.testcase_vals.label_tag }}
+    <br>
+    {{ testcase_form.testcase_vals }}
+    <br>
     <input type="submit" value="Generate">
 </form>
 {% else %}
 <form action="{% url 'testcases:testcase_create' %}" method="post">
     {% csrf_token %}
-    {{ testcase_form }}
+    {{ testcase_form.testcase_id.label_tag }}
+    <br>
+    {{ testcase_form.testcase_id }}
+    <br>
+    {{ testcase_form.testcase_vals.label_tag }}
+    <br>
+    {{ testcase_form.testcase_vals }}
+    <br>
     <input type="submit" value="Generate">
 </form>
 {% endif %}

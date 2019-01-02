@@ -1,44 +1,39 @@
 from .what_a_racket_generator import generator
-from .models import Testcase
-from .forms.testcase_form import TestcaseForm
 
 def parse_testcase_spec_string(specs):
-    mod_str = specs.strip('()')
+    mod_str = specs.split('\n')
     br = 0
-    running_str = ""
     tokens = []
-    for c in mod_str:
-        if(c == ' ' and br == 0):
-            tokens.append(running_str)
-            running_str = ""
-        else:
-            if(c == '('):
-                br += 1
-            elif(c == ')'):
-                br -= 1
-            running_str += c
-    if running_str:
-        tokens.append(running_str)
-    ret = []
-    print(tokens, br, running_str)
+    for s in mod_str:
+        s = s.strip('()')
+        running_str = ""
+        struct = []
+        for c in s:
+            if(c == ' ' and br == 0):
+                struct.append(running_str)
+                running_str = ""
+            else:
+                if(c == '('):
+                    br += 1
+                elif(c == ')'):
+                    br -= 1
+                running_str += c
+        if running_str:
+            struct.append(running_str)
+        tokens.append(struct)
+    ret = {}
     for token in tokens:
-        if(token.startswith('(')):
-            ret.append(parse_testcase_spec_string(token))
+        if(len(token) == 3 and token[0].startswith('make-')):
+            ret[token[0][5:]] = ((token[0][5:], token[1]), (token[0][5:], token[2]))
         else:
-            ret.append(token)
+            raise ValueError("Incorrect specifications")
     return ret
 
-def create_testcase(specification):
+def create_testcase(struct_id, specification):
     specs = parse_testcase_spec_string(specification)
-    return specs
-
-def deserialize_specs(specs):
-    pass
-
-def save_testcase(n, t_id, t_vals):
-    t = Testcase(name=n, testcase_id=t_id, testcase_vals=t_vals)
-    t.save()
-
-if __name__ == "__main__":
-    print(create_testcase("(make-x Num (make-y (make-z Str Num) Int) Int)"))
-
+    for key, value in specs.items():
+        print(value)
+        generator.struct_list[key] = generator.Struct(key, value)
+    ret = generator.generate_struct(struct_id, 3)
+    print(ret)
+    return ret
