@@ -16,7 +16,7 @@ cycler==0.10.0
 daemonize==2.4.7
 defer==1.0.6
 distro-info==0.18
-Django==2.1.4
+Django==2.2.13
 evdev==0.7.0
 feedparser==5.2.1
 Flask==1.0.2
