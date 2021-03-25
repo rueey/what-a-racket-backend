@@ -70,7 +70,7 @@ pytz==2018.7
 pyudev==0.21.0
 pywal==3.2.1
 pyxdg==0.25
-PyYAML==3.12
+PyYAML==5.4
 reportlab==3.4.0
 requests==2.19.1
 requests-toolbelt==0.8.0
