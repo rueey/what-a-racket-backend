@@ -45,7 +45,7 @@ MarkupSafe==1.0
 matplotlib==3.0.0
 mccabe==0.6.1
 notify2==0.3
-numpy==1.15.2
+numpy==1.22.0
 oauth==1.0.1
 oauthlib==2.0.6
 olefile==0.45.1
